@@ -102,11 +102,13 @@ def auth_guacamole(url_guacamole, username, password, totp_secret):
     # Caso não exista um token válido, gera um novo
     try:
         url = f'{url_guacamole}/api/tokens'
+        print(url)
         payload = {
             'username': username,
             'password': password
         }
         response = requests.post(url, data=payload)
+        print(response.text)
 
         # Verificar se o TOTP é requerido
         if response.status_code == 403 and 'guac-totp' in response.json().get('expected', [{}])[0].get('name', ''):
