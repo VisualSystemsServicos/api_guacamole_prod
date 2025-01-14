@@ -13,7 +13,7 @@ TIME_TOKEN = 10
 # TOKEN_CACHE_FILE = '/var/log/api_guacamole/guacamole_hom_token_cache.json'
 
 # Token Guacamole Produtivo
-TOKEN_CACHE_FILE = "/var/log/api_guacamole/guacamole_prod_token_cache.json"
+TOKEN_CACHE_FILE = '/var/log/api_guacamole/guacamole_prod_token_cache.json'
 
 def setup_logger(name: str = "logging", level: int = logging.INFO, log_dir: str = '/var/log/api_guacamole/') -> Logger:
     """
