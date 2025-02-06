@@ -1,5 +1,8 @@
+from app.security import verify_api_key
 from fastapi import APIRouter
+from fastapi import Depends
 from typing import List
+
 from app.utils import run_main_script_create_host_secrets
 from app.utils import run_main_script_create_org_guacamole
 from app.utils import run_main_script_load_connections_org_guacamole
@@ -13,7 +16,7 @@ from app.utils import run_main_script_verify_org
 router = APIRouter()
 
 @router.post("/create_host_secrets")
-async def execute_script_create_host_secrets(org: str, host: str, json_secrets: dict, ip_guacd: str):
+async def execute_script_create_host_secrets(org: str, host: str, json_secrets: dict, ip_guacd: str, api_key: str = Depends(verify_api_key)):
     """
     Route create host secrets.
     """
@@ -22,7 +25,7 @@ async def execute_script_create_host_secrets(org: str, host: str, json_secrets: 
     return {"route_status": "sucess", "result": result}
 
 @router.post("/create_org_guacamole")
-async def execute_script_create_org_guacamole(path_org: str):
+async def execute_script_create_org_guacamole(path_org: str, api_key: str = Depends(verify_api_key)):
     """
     Route create org guacamole.
     """
@@ -31,7 +34,7 @@ async def execute_script_create_org_guacamole(path_org: str):
     return {"route_status": "sucess", "result": result}
 
 @router.post("/load_connections_org_guacamole")
-async def execute_script_load_connections_org_guacamole(org: str, ip_guacd: str):
+async def execute_script_load_connections_org_guacamole(org: str, ip_guacd: str, api_key: str = Depends(verify_api_key)):
     """
     Route load connections org guacamole.
     """
@@ -40,7 +43,7 @@ async def execute_script_load_connections_org_guacamole(org: str, ip_guacd: str)
     return {"route_status": "sucess", "result": result}
 
 @router.post("/migrate_org_full")
-async def execute_script_migrate_org_full(old_org: str, new_org: str, ip_guacd: str):
+async def execute_script_migrate_org_full(old_org: str, new_org: str, ip_guacd: str, api_key: str = Depends(verify_api_key)):
     """
     Route migrate org full.
     """
@@ -49,7 +52,7 @@ async def execute_script_migrate_org_full(old_org: str, new_org: str, ip_guacd: 
     return {"route_status": "sucess", "result": result}
 
 @router.post("/migrate_org_parcial")
-async def execute_script_migrate_org_parcial(old_org: str, new_org: str, list_hosts: List[str], ip_guacd: str):
+async def execute_script_migrate_org_parcial(old_org: str, new_org: str, list_hosts: List[str], ip_guacd: str, api_key: str = Depends(verify_api_key)):
     """
     Route migrate org parcial.
     """
@@ -58,7 +61,7 @@ async def execute_script_migrate_org_parcial(old_org: str, new_org: str, list_ho
     return {"route_status": "sucess", "result": result}
 
 @router.post("/delete_host")
-async def execute_script_delete_host(org: str, host: str):
+async def execute_script_delete_host(org: str, host: str, api_key: str = Depends(verify_api_key)):
     """
     Route delete host.
     """
@@ -67,7 +70,7 @@ async def execute_script_delete_host(org: str, host: str):
     return {"route_status": "sucess", "result": result}
 
 @router.post("/read_host")
-async def execute_script_read_host(org: str, host: str):
+async def execute_script_read_host(org: str, host: str, api_key: str = Depends(verify_api_key)):
     """
     Route read host.
     """
@@ -76,7 +79,7 @@ async def execute_script_read_host(org: str, host: str):
     return {"route_status": "sucess", "result": result}
 
 @router.post("/update_host")
-async def execute_script_update_host(org: str, host: str, data: dict):
+async def execute_script_update_host(org: str, host: str, data: dict, api_key: str = Depends(verify_api_key)):
     """
     Route update host.
     """
@@ -85,7 +88,7 @@ async def execute_script_update_host(org: str, host: str, data: dict):
     return {"route_status": "sucess", "result": result}
 
 @router.post("/verify_org")
-async def execute_script_verify_org(org: str):
+async def execute_script_verify_org(org: str, api_key: str = Depends(verify_api_key)):
     """
     Route verify org.
     """
