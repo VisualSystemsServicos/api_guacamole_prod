@@ -7,8 +7,6 @@ from fastapi import FastAPI
 from app.routes import router
 
 app = FastAPI()
-
-# Registras as rotas do servidor FastAPI
 app.include_router(router)
 
 @app.get("/")

@@ -72,13 +72,14 @@ def run_main_script_delete_host(org, host):
     except Exception as e:
         return {"error": str(e)}
 
-def run_main_script_read_host(org, host):
+def run_main_script_read_host(org, host, method):
     try:
         secrets = read_host.main(
             org = org, 
-            host = host
+            host = host,
+            method = method
         )
-        return {"message": f"Secrets: {secrets}"}
+        return {"message": secrets}
     except Exception as e:
         return {"error": str(e)}
 

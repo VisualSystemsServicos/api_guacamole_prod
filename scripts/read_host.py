@@ -32,18 +32,24 @@ def extract_secrets(data):
         result = []
         for key, value in data.items():
             if key.startswith('username_'):
-                index = key.split('_')[1] 
-                password_key = f'password_{index}' 
-                password_value = data.get(password_key, '')
-                result.append(((key, value), (password_key, password_value)))
+                index = key.split('_')[1]  # Extrai o índice do username
+                password_key = f'password_{index}'  # Gera a chave correspondente da senha
+                password_value = data.get(password_key, '')  # Obtém o valor da senha
+                
+                # Adiciona o resultado no formato desejado
+                result.append({
+                    "key": index,
+                    "username": value,
+                    "password": password_value
+                })
         
-        return result
+        return {"secrets": result}  # Retorna o JSON com a lista de segredos
 
     except Exception as e:
         log_geral.error(f'({script_name}) - erro na função extract_secrets - {e}')
         return None
 
-def main(org, host, token_guacamole=None, data_source=None):
+def main(org, host, method, token_guacamole=None, data_source=None):
     log_geral.info(f'')
     log_geral.info(f'############################################################################')
     log_geral.info(f'')
@@ -70,10 +76,21 @@ def main(org, host, token_guacamole=None, data_source=None):
 
             log_geral.info(f'({script_name}) - host informado - {host}')
             log_geral.info(f'({script_name}) - path_vault - {path_vault}')
+            log_geral.info(f'({script_name}) - method informado - {method}')
 
             data_secrets = vault_secrets(url_vault=url_vault, token=token_vault, org_path=path_vault)
-            secrets = extract_secrets(data_secrets)
-            log_geral.info(f'({script_name}) - script pegou os segredos com sucesso')
+
+            if method == 'credentials':
+                secrets = extract_secrets(data_secrets)
+                log_geral.info(f'({script_name}) - script pegou os segredos com o method - {method}')
+
+            elif method == 'full':
+                secrets = data_secrets
+                log_geral.info(f'({script_name}) - script pegou os segredos com o method - {method}')
+            
+            else:
+                log_geral.info(f'({script_name}) - method informado invalido - {method}')
+                return f'method informado invalido'
 
             if secrets != []:   
                 log_geral.info(f'({script_name}) - script pegou os segredos com sucesso')
@@ -99,4 +116,4 @@ if __name__ == '__main__':
 
     """
 
-    main_result = main(org=org, host=host)
+    main_result = main(org=org, host=host, method=method)

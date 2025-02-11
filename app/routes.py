@@ -70,12 +70,12 @@ async def execute_script_delete_host(org: str, host: str, api_key: str = Depends
     return {"route_status": "sucess", "result": result}
 
 @router.post("/read_host")
-async def execute_script_read_host(org: str, host: str, api_key: str = Depends(verify_api_key)):
+async def execute_script_read_host(org: str, host: str, method: str = 'credentials', api_key: str = Depends(verify_api_key)):
     """
     Route read host.
     """
 
-    result = run_main_script_read_host(org, host)
+    result = run_main_script_read_host(org, host, method)
     return {"route_status": "sucess", "result": result}
 
 @router.post("/update_host")
