@@ -150,7 +150,7 @@ def main(org, ip_guacd, token_guacamole=None, data_source=None):
                     username, password, hostname, port, type_host, url_acess = consult_secrets
 
                     # Cria conexão SSH
-                    if type_host == 'Linux':
+                    if type_host == 'Linux' or type_host == 'Switch':
                         payload = {
                             "parentIdentifier": id_parentIdentifier,
                             "name": host,
