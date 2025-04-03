@@ -183,7 +183,7 @@ def main(org, ip_guacd, token_guacamole=None, data_source=None):
                             log_geral.info(f'({script_name}) - Conexao do host "{host}" já existe - type: {type_host}')
 
                     # Cria conexão RDP
-                    elif type_host == 'Windows':
+                    elif type_host == 'Windows' or type_host == 'HyperV':
                         payload = {
                             "parentIdentifier": id_parentIdentifier,
                             "name": host,
